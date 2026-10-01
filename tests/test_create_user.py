@@ -9,21 +9,17 @@ from stellar_burgers_api import StellarBurgersApi
 class TestCreateUser:
 
     @allure.title('Создание уникального пользователя')
-    def test_create_unique_user_success(self):
-        body = generate_user_body()
-        response = StellarBurgersApi.create_user(body)
-        token = response.json().get('accessToken', '')
+    def test_create_unique_user_success(self, registered_user):
+        body, _, response = registered_user
 
         assert response.status_code == 200
         assert response.json()['success'] is True
         assert 'accessToken' in response.json()
         assert response.json()['user']['email'] == body['email']
 
-        StellarBurgersApi.delete_user(token)
-
     @allure.title('Создание пользователя, который уже зарегистрирован')
     def test_create_existing_user_failed(self, registered_user):
-        body, _ = registered_user
+        body, _, _ = registered_user
         response = StellarBurgersApi.create_user(body)
 
         assert response.status_code == 403

@@ -9,7 +9,7 @@ class TestLoginUser:
 
     @allure.title('Вход под существующим пользователем')
     def test_login_existing_user_success(self, registered_user):
-        body, _ = registered_user
+        body, _, _ = registered_user
         response = StellarBurgersApi.login_user(body['email'], body['password'])
 
         assert response.status_code == 200
@@ -19,7 +19,7 @@ class TestLoginUser:
 
     @allure.title('Вход с неверным логином и паролем')
     def test_login_with_wrong_credentials_failed(self, registered_user):
-        body, _ = registered_user
+        body, _, _ = registered_user
         response = StellarBurgersApi.login_user(body['email'], 'wrong_password')
 
         assert response.status_code == 401

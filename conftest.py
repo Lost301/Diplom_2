@@ -9,7 +9,7 @@ def registered_user():
     body = generate_user_body()
     response = StellarBurgersApi.create_user(body)
     token = response.json().get('accessToken', '')
-    yield body, token
+    yield body, token, response
     StellarBurgersApi.delete_user(token)
 
 

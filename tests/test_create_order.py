@@ -9,7 +9,7 @@ class TestCreateOrder:
 
     @allure.title('Создание заказа с авторизацией и ингредиентами')
     def test_create_order_with_auth_success(self, registered_user, ingredient_ids):
-        _, token = registered_user
+        _, token, _ = registered_user
         response = StellarBurgersApi.create_order(ingredient_ids, token)
 
         assert response.status_code == 200
@@ -27,7 +27,7 @@ class TestCreateOrder:
 
     @allure.title('Создание заказа без ингредиентов')
     def test_create_order_without_ingredients_failed(self, registered_user):
-        _, token = registered_user
+        _, token, _ = registered_user
         response = StellarBurgersApi.create_order([], token)
 
         assert response.status_code == 400
@@ -38,7 +38,7 @@ class TestCreateOrder:
 
     @allure.title('Создание заказа с неверным хешем ингредиентов')
     def test_create_order_with_invalid_ingredient_hash_failed(self, registered_user):
-        _, token = registered_user
+        _, token, _ = registered_user
         response = StellarBurgersApi.create_order(['invalid_hash_12345'], token)
 
         assert response.status_code == 500
