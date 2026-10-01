@@ -3,6 +3,4 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
-allure-results/
-allure-report/
 .idea/
